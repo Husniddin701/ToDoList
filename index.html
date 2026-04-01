@@ -1,23 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <div class="add-task">
-            <input type="text" id="new-task" placeholder="Add task">
-            <button id="add-button">Addd</button>
-        </div>
-        <div class="task-list">
-            
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fortuna</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="pointer"></div>
+
+    <div class="wheel" id="wheel">
+      <span class="label l1 yellow">Uy</span>
+      <span class="label l2 black">Cobalt</span>
+      <span class="label l3 yellow">Velosiped</span>
+      <span class="label l4 black">Telefon</span>
+      <span class="label l5 yellow">Noutbook</span>
+      <span class="label l6 black">Klaviatura</span>
+      <span class="label l7 yellow">Naushnik</span>
+      <span class="label l8 black">iPhone</span>
     </div>
 
+    <button onclick="spin()">SPIN 🎡</button>
+
+    <div class="result" id="result"></div>
 
     <script src="./app.js"></script>
-</body>
+  </body>
 </html>

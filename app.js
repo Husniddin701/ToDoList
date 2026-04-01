@@ -1,89 +1,50 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const addTaskButton = document.getElementById('add-button');
-    const newTaskInput = document.getElementById('new-task');
-    const taskList = document.querySelector('.task-list');
+const prizes = [
+  "Uy",
+  "Cobalt",
+  "Velosiped",
+  "Telefon",
+  "Noutbook",
+  "Klaviatura",
+  "Naushnik",
+  "iPhone",
+];
 
-    addTaskButton.addEventListener('click', function() {
-        const taskText = newTaskInput.value.trim();
-        if (taskText !== '') {
-            addTask(taskText);
-            newTaskInput.value = '';
-        }
-    });
+let deg = 0;
 
-    function addTask(taskText) {
-        const taskDiv = document.createElement('div');
-        taskDiv.classList.add('task');
+function spin() {
+  let random = Math.floor(Math.random() * 360) + 720;
+  deg += random;
 
-       
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        taskDiv.appendChild(checkbox);
+  let wheel = document.getElementById("wheel");
+  wheel.style.transform = "rotate(" + deg + "deg)";
 
-        const taskTextSpan = document.createElement('span');
-        taskTextSpan.classList.add('task-text');
-        taskTextSpan.textContent = taskText;
-        taskDiv.appendChild(taskTextSpan);
+  setTimeout(() => {
+    let d = deg % 360;
 
-        const editButton = document.createElement('button');
-        editButton.classList.add('edit');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', function() {
-           
-        });
-        taskDiv.appendChild(editButton);
+    // 🔥 STRELKA TEPADA (270° nuqta)
+    let pointerAngle = (360 - d + 270) % 360;
 
-        
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete');
-        deleteButton.textContent = 'Delete';
-        deleteButton.addEventListener('click', function() {
-            taskDiv.remove();
-        });
-        taskDiv.appendChild(deleteButton);
+    let index = Math.floor(pointerAngle / 45);
 
-      
-        const dateTimeDiv = document.createElement('div');
-        dateTimeDiv.classList.add('date-time');
+    let win = prizes[index];
 
-        const dateInput = document.createElement('input');
-        dateInput.type = 'date';
-        dateTimeDiv.appendChild(dateInput);
+    document.getElementById("result").innerHTML =
+      "🎉 Siz yutdingiz: <b>" + win + "</b><br>👏 Sizni tabriklaymiz!";
 
-        const timeInput = document.createElement('input');
-        timeInput.type = 'time';
-        dateTimeDiv.appendChild(timeInput);
+    confetti();
+  }, 4000);
+}
 
-        const setTimeButton = document.createElement('button');
-        setTimeButton.textContent = 'Set time';
-        setTimeButton.addEventListener('click', function() {
-            const selectedDate = dateInput.value;
-            const selectedTime = timeInput.value;
+/* SALYUT */
+function confetti() {
+  for (let i = 0; i < 80; i++) {
+    let div = document.createElement("div");
+    div.className = "confetti";
+    div.style.left = Math.random() * 100 + "vw";
+    div.style.background = "hsl(" + Math.random() * 360 + ",100%,50%)";
+    div.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(div);
 
-            if (selectedDate && selectedTime) {
-                const reminderDateTime = new Date(`${selectedDate}T${selectedTime}`); 
-                setReminder(taskText, reminderDateTime);
-            } else {
-                alert('Iltimos, sanani va vaqtni kiriting!');
-            }
-        });
-        dateTimeDiv.appendChild(setTimeButton);
-
-        taskDiv.appendChild(dateTimeDiv);
-
-        taskList.appendChild(taskDiv);
-    }
-
-    function setReminder(taskText, reminderDateTime) {
-        const now = new Date();
-        const timeDiff = reminderDateTime.getTime() - now.getTime();
-
-        if (timeDiff > 0) {
-            setTimeout(function() {
-                alert(`Eslatma: ${taskText}!`);
-            }, timeDiff);
-        } else {
-            alert("Belgilangan vaqt o'tib ketgan!");
-        }
-    }
-});
+    setTimeout(() => div.remove(), 4000);
+  }
+}
